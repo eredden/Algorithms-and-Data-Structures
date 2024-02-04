@@ -31,4 +31,4 @@ In Typescript, `const a = []` is not an array because it does not have a fixed s
 
 ### Algorithms
 
-A good way to solve a problem is to visualize it, write psuedocode, then real code. Check out `linear-search.c` and `binary-search.c` for the programs covered during this lesson so far.
+A good way to solve a problem is to visualize it, write psuedocode, then real code. Check out `linear-search.c`, `binary-search.c`, and `two-crystal-balls.c` for the programs covered during this lesson so far. Most of the topics dicussed in the lesson videos for these pertained to how each search algorithm worked and the planning that went into it, and I figure it would be easier to review the code for these programs than it is to write out the explanations here.
