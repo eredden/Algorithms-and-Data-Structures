@@ -4,18 +4,18 @@
 int two_crystal_balls(int haystack[], int max)
 {  
     int jump_amount = (int)sqrt(max);
-    int i = jump_amount;
+    int position = jump_amount;
 
-    for (i; i <= max; i += jump_amount)
+    for (position; position <= max; position += jump_amount)
     {
-        if (haystack[i]) { break; }
+        if (haystack[position]) { break; }
     }
 
-    i -= jump_amount;
+    position -= jump_amount;
 
-    for (i; i <= (i + jump_amount); i++)
+    for (position; position <= (position + jump_amount); position++)
     {
-        if (haystack[i]) { return i; }
+        if (haystack[position]) { return position; }
     }
 
     return -1;
