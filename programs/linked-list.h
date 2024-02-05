@@ -21,8 +21,8 @@ void insert_at(linked_list_t *linked_list, node_t *node, int index);
 void insert_front(linked_list_t *linked_list, node_t *node);
 void insert_back(linked_list_t *linked_list, node_t *node);
 
-void remove_at(linked_list_t *linked_list, int index);
-void remove_front(linked_list_t *linked_list);
-void remove_back(linked_list_t *linked_list);
+int remove_at(linked_list_t *linked_list, int index);
+int remove_front(linked_list_t *linked_list);
+int remove_back(linked_list_t *linked_list);
 
-# endif
+# endif // LINKED_LIST

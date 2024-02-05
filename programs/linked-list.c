@@ -1,16 +1,5 @@
 #include <stdio.h>
-
-typedef struct node 
-{
-    int value;
-    struct node *prev, *next;
-} node_t;
-
-typedef struct linked_list
-{
-    node_t *head;
-    node_t *tail;
-} linked_list_t;
+#include "linked-list.h"
 
 int get_length(linked_list_t *linked_list)
 {
@@ -77,7 +66,7 @@ void insert_back(linked_list_t *linked_list, node_t *node)
     linked_list -> tail = node;
 }
 
-void remove_at(linked_list_t *linked_list, int index)
+int remove_at(linked_list_t *linked_list, int index)
 {
     node_t *node = get_node(linked_list, index);
 
@@ -92,9 +81,11 @@ void remove_at(linked_list_t *linked_list, int index)
 
     node -> next = NULL;
     node -> prev = NULL;
+
+    return node -> value;
 }
 
-void remove_front(linked_list_t *linked_list)
+int remove_front(linked_list_t *linked_list)
 {
     node_t *removed_head = linked_list -> head;
     node_t *new_head = linked_list -> head -> next;
@@ -103,9 +94,11 @@ void remove_front(linked_list_t *linked_list)
 
     removed_head -> next = NULL;
     new_head -> prev = NULL;
+
+    return removed_head -> value;
 }
 
-void remove_back(linked_list_t *linked_list)
+int remove_back(linked_list_t *linked_list)
 {
     node_t *removed_tail = linked_list -> tail;
     node_t *new_tail = linked_list -> tail -> prev;
@@ -115,4 +108,5 @@ void remove_back(linked_list_t *linked_list)
     removed_tail -> prev = NULL;
     new_tail -> next = NULL;
 
+    return removed_tail -> value;
 }
