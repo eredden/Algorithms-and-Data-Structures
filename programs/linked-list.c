@@ -6,9 +6,15 @@ typedef struct node
     struct node *prev, *next;
 } node_t;
 
-int get_length(node_t *head)
+typedef struct linked_list
 {
-    node_t *current_node = head;
+    node_t *head;
+    node_t *tail;
+} linked_list_t;
+
+int get_length(linked_list_t *linked_list)
+{
+    node_t *current_node = linked_list -> head;
     int length;
 
     for (length = 0; current_node -> next != NULL; length++)
@@ -19,9 +25,9 @@ int get_length(node_t *head)
     return length + 1;
 }
 
-node_t* get_node(node_t *head, int index)
+node_t* get_node(linked_list_t *linked_list, int index)
 {
-    node_t *current_node = head;
+    node_t *current_node = linked_list -> head;
 
     for (int i = 0; i < index; i++)
     {
@@ -30,53 +36,83 @@ node_t* get_node(node_t *head, int index)
             current_node = current_node -> next;
         }
 
-        else { break; }
+        else { return NULL; }
     }
 
     return current_node;
 }
 
-void insert_at(node_t *head, node_t *node, int index)
+void insert_at(linked_list_t *linked_list, node_t *node, int index)
 {
-    node_t *prev_node = get_node(head, index);
-    node_t *next_node = prev_node -> next;
+    node_t *next_node = get_node(linked_list, index);
+    node_t *prev_node = next_node -> prev;
 
     node -> next = next_node;
     node -> prev = prev_node;
 
     if (prev_node != NULL) { prev_node -> next = node; }
+    else { linked_list -> head = node; }
+
     if (next_node != NULL) { next_node -> prev = node; }
+    else { linked_list -> tail = node; }
 }
 
-void prepend(node_t *head, node_t *node)
+void insert_front(linked_list_t *linked_list, node_t *node)
 {
+    node_t *head = linked_list -> head;
+
     node -> next = head;
     head -> prev = node;
+
+    linked_list -> head = node;
 }
 
-void append(node_t *head, node_t *node)
+void insert_back(linked_list_t *linked_list, node_t *node)
 {
-    int last_index = get_length(head) - 1;
-    node_t *last_node = get_node(head, last_index);
+    node_t *tail = linked_list -> tail;
 
-    last_node -> next = node;
-    node -> prev = last_node;
+    tail -> next = node;
+    node -> prev = tail;
+
+    linked_list -> tail = node;
 }
 
-void remove_node(node_t *node)
+void remove_at(linked_list_t *linked_list, int index)
 {
+    node_t *node = get_node(linked_list, index);
+
     node_t *prev_node = node -> prev;
     node_t *next_node = node -> next;
 
     if (prev_node != NULL) { prev_node -> next = next_node; }
+    else { linked_list -> head = next_node; }
+
     if (next_node != NULL) { next_node -> prev = prev_node; }
+    else { linked_list -> tail = prev_node; }
 
     node -> next = NULL;
     node -> prev = NULL;
 }
 
-void remove_at(node_t *head, int index)
+void remove_front(linked_list_t *linked_list)
 {
-    node_t *node = get_node(head, index);
-    remove_node(node);
+    node_t *removed_head = linked_list -> head;
+    node_t *new_head = linked_list -> head -> next;
+
+    linked_list -> head = linked_list -> head -> next;
+
+    removed_head -> next = NULL;
+    new_head -> prev = NULL;
+}
+
+void remove_back(linked_list_t *linked_list)
+{
+    node_t *removed_tail = linked_list -> tail;
+    node_t *new_tail = linked_list -> tail -> prev;
+
+    linked_list -> tail = linked_list -> tail -> prev;
+
+    removed_tail -> prev = NULL;
+    new_tail -> next = NULL;
+
 }

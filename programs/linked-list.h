@@ -7,15 +7,22 @@ typedef struct node
     struct node *prev, *next;
 } node_t;
 
-int get_length(node_t *head);
+typedef struct linked_list
+{
+    node_t *head;
+    node_t *tail;
+} linked_list_t;
 
-node_t* get_node(node_t *head, int index);
+int get_length(linked_list_t *linked_list);
 
-void insert_at(node_t *head, node_t *node, int index);
-void prepend(node_t *head, node_t *node);
-void append(node_t *head, node_t *node);
+node_t* get_node(linked_list_t *linked_list, int index);
 
-void remove_node(node_t *node);
-void remove_at(node_t *head, int index);
+void insert_at(linked_list_t *linked_list, node_t *node, int index);
+void insert_front(linked_list_t *linked_list, node_t *node);
+void insert_back(linked_list_t *linked_list, node_t *node);
+
+void remove_at(linked_list_t *linked_list, int index);
+void remove_front(linked_list_t *linked_list);
+void remove_back(linked_list_t *linked_list);
 
 # endif
