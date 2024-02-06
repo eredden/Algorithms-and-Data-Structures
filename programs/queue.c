@@ -12,15 +12,11 @@ void enqueue(queue_t *queue, node_t *node)
     { 
         queue -> head = node;
         queue -> tail = node; 
+        return;
     }
 
-    else
-    {
-        node_t *old_tail = queue -> tail;
-        
-        old_tail -> next = node;
-        queue -> tail = node;
-    }
+    queue -> tail -> next = node;
+    queue -> tail = node;
 }
 
 int deque(queue_t *queue)
