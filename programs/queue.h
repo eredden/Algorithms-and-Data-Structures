@@ -4,7 +4,7 @@
 typedef struct node 
 {
     int value;
-    struct node *prev, *next;
+    struct node *next;
 } node_t;
 
 typedef struct queue
@@ -14,7 +14,7 @@ typedef struct queue
     int length;
 } queue_t;
 
-node_t* peek(queue_t *queue, int index);
+int peek(queue_t *queue);
 
 void enqueue(queue_t *queue, node_t *node);
 
