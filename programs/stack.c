@@ -31,28 +31,3 @@ int pop(stack_t *stack)
 
     return old_head -> value;
 }
-
-// remove before git push
-int main(void)
-{
-    stack_t stack;
-    node_t first, second, last;
-
-    stack.head = NULL;
-    stack.length = 0;
-
-    first.next = second.next = last.next = NULL;
-    first.value = 1;
-    second.value = 2;
-    last.value = 3;
-
-    push(&stack, &first);
-    push(&stack, &second);
-    push(&stack, &last);
-
-    int value1 = pop(&stack);
-    int value2 = pop(&stack);
-    int value3 = pop(&stack);
-
-    return 0;
-}
