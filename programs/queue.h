@@ -1,5 +1,5 @@
-#ifndef LINKED_LIST
-#define LINKED_LIST
+#ifndef QUEUE
+#define QUEUE
 
 typedef struct node 
 {
@@ -20,4 +20,4 @@ void enqueue(queue_t *queue, node_t *node);
 
 int deque(queue_t *queue);
 
-# endif // LINKED_LIST
+# endif // QUEUE
