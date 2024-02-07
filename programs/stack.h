@@ -10,7 +10,6 @@ typedef struct node
 typedef struct stack
 {
     node_t *head;
-    node_t *tail;
     int length;
 } stack_t;
 

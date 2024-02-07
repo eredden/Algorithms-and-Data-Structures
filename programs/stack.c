@@ -11,7 +11,6 @@ void push(stack_t *stack, node_t *node)
     if (stack -> head == NULL) 
     { 
         stack -> head = node;
-        stack -> tail = node; 
         return;
     }
 
@@ -39,7 +38,7 @@ int main(void)
     stack_t stack;
     node_t first, second, last;
 
-    stack.head = stack.tail = NULL;
+    stack.head = NULL;
     stack.length = 0;
 
     first.next = second.next = last.next = NULL;
