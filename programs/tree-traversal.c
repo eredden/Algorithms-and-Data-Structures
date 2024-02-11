@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #define MAX_PATH_LENGTH 50
-#define EMPTY_SPOT_INDICATOR 0
+#define EMPTY_SPOT_INDICATOR -1234
 
 typedef struct node
 {
@@ -19,9 +19,15 @@ void walk(node_t* node, int path[])
     int index = 0;
     for(index; index < MAX_PATH_LENGTH; index++)
     {
-        if (path[index] <= EMPTY_SPOT_INDICATOR) { break; }
+        if (path[index] == EMPTY_SPOT_INDICATOR) { break; }
         if (index == MAX_PATH_LENGTH - 1) { exit(-1); }
     }
+
+    /* 
+    the position of the path[index] assignment
+    determines the order in which the tree is
+    recrursed, e.g. this is pre-order.
+    */
 
     path[index] = node -> value;
     walk(node -> left, path);
@@ -64,13 +70,19 @@ int main(void)
     node21.value = 21;
     node22.value = 22;
 
-    int path[MAX_PATH_LENGTH] = { EMPTY_SPOT_INDICATOR };
+    int path[MAX_PATH_LENGTH];
+
+    for (int i = 0; i < MAX_PATH_LENGTH; i++)
+    {
+        path[i] = EMPTY_SPOT_INDICATOR;
+    }
 
     pre_order_search(&head, path);
 
     printf("PATH: ");
     for (int i = 0; i < MAX_PATH_LENGTH; i++)
     {
+        if (path[i] == EMPTY_SPOT_INDICATOR) { break; }
         printf("%d ", path[i]);
     }
     printf("\n");
