@@ -23,6 +23,11 @@ int deque(queue_t *queue)
 {
     if (queue -> length <= 0) { exit(-1); }
 
+    if (queue -> length == 1) 
+    { 
+        queue -> tail = NULL; 
+    }
+
     queue -> length--;
 
     node_t *old_head = queue -> head;
