@@ -48,7 +48,6 @@ int find(node_t* head, int needle)
     else if (head -> value < needle) { find(head -> right, needle); }
 }
 
-// TO-DO: Fix this so that value doesn't revert to 0 after walk().
 void insert(node_t* head, node_t* parent, int needle)
 {
     if (head != NULL)
@@ -59,12 +58,15 @@ void insert(node_t* head, node_t* parent, int needle)
 
     if (head == NULL)
     { 
-        node_t node;
-        node.left = node.right = NULL;
-        node.value = needle;
+        /* this causes a memory leak as dynamically allocated memory 
+        is not freed; added this to prevent the node from disappearing 
+        outside the scope of this function */
+        node_t* node = (node_t*) malloc(sizeof(node_t));
+        node -> left = node -> right = NULL;
+        node -> value = needle;
 
-        if (parent -> value >= needle) { parent -> left  = &node; }
-        if (parent -> value <  needle) { parent -> right = &node; }
+        if (parent -> value >= needle) { parent -> left  = node; }
+        if (parent -> value <  needle) { parent -> right = node; }
     }
 }
 
@@ -118,8 +120,10 @@ int main(void)
 
     printf("\n");
 
-    // using find()
+    // using find() and insert()
     int needle = 11;
+    insert(&head, &head, needle);
+
     int result = find(&head, needle);
 
     if (result) { printf("Needle %d was found.\n"); }
