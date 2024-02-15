@@ -25,7 +25,7 @@ void walk(node_t* node, int path[])
     for(index; index < MAX_PATH_LENGTH; index++)
     {
         if (path[index] == EMPTY_SPOT_INDICATOR) { break; }
-        if (index == MAX_PATH_LENGTH - 1) { exit(-1); }
+        if (index == MAX_PATH_LENGTH - 1) { exit(EXIT_FAILURE); }
     }
 
     /* the position of the path[index] 

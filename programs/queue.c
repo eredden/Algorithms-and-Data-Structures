@@ -21,7 +21,7 @@ void enqueue(queue_t *queue, node_t *node)
 
 int deque(queue_t *queue)
 {
-    if (queue -> length <= 0) { exit(-1); }
+    if (queue -> length <= 0) { exit(EXIT_FAILURE); }
 
     if (queue -> length == 1) 
     { 

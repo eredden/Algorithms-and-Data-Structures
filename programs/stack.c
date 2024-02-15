@@ -20,7 +20,7 @@ void push(stack_t *stack, node_t *node)
 
 int pop(stack_t *stack)
 {
-    if (stack -> length <= 0) { exit(-1); }
+    if (stack -> length <= 0) { exit(EXIT_FAILURE); }
 
     stack -> length--;
 
