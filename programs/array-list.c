@@ -57,6 +57,17 @@ void arraylist_destructor(arraylist_t* arraylist)
     free(arraylist);
 }
 
+int arraylist_peek(arraylist_t* arraylist)
+{
+    if (arraylist == NULL || arraylist -> list == NULL) 
+    { 
+        printf("Null pointer passed to arraylist_peek().\n");
+        exit(EXIT_FAILURE);
+    }
+
+    return arraylist -> list[0];
+}
+
 void arraylist_insert_end(arraylist_t* arraylist, int value)
 {
     if (arraylist == NULL) 
