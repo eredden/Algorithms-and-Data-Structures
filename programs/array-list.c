@@ -1,14 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-#define EMPTY_SPOT_INDICATOR 0
-
-typedef struct arraylist
-{
-    int  size;
-    int  capacity;
-    int* list;
-} arraylist_t;
+#include "array-list.h"
 
 arraylist_t* arraylist_factory(int capacity)
 { 
@@ -252,33 +244,4 @@ void arraylist_remove_end(arraylist_t* arraylist)
     }
 
     arraylist -> size--;
-}
-
-int main(void)
-{
-    arraylist_t* list = arraylist_factory(2);
-
-    // convoluted way of testing addition/removal of values
-    for (int i = 4; i > 0; i--)
-    {
-        arraylist_insert_beginning(list, i);
-        arraylist_insert_end(list, i + 1);
-        arraylist_remove_end(list);
-    }
-
-    arraylist_insert_end(list, 5);
-
-    printf("Contents of the arraylist: ");
-    
-    // this should print 1 2 3 4 5
-    for (int i = 0; i < list -> size; i++) 
-    {
-        printf("%d ", list -> list[i]);
-    }
-
-    printf("\n");
-
-    arraylist_destructor(list);
-
-    return 0;
 }
