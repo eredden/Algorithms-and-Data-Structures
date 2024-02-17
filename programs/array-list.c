@@ -56,6 +56,82 @@ void arraylist_destructor(arraylist_t* arraylist)
     free(arraylist);
 }
 
+void arraylist_insert(arraylist_t* arraylist, int value, int position)
+{
+    validate_arraylist(arraylist);
+
+    int size = arraylist -> size;
+    int capacity = arraylist -> capacity;
+
+    if (position < 0 || position > size - 1)
+    {
+        printf("Position is out of bounds.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (size == capacity) 
+    {
+        int  new_capacity = capacity * 2;
+        int* new_list = (int*) malloc(new_capacity * sizeof(int));
+
+        if (new_list == NULL)
+        {
+            printf("Memory allocation failed for new list.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        for (int i = 0; i < position; i++)
+        {
+            new_list[i] = arraylist -> list[i];
+        }
+
+        new_list[position] = value;
+
+        for (int i = position; i < size + 1; i++)
+        {
+            new_list[i + 1] = arraylist -> list[i];
+        }
+
+        for (int i = size + 1; i < new_capacity; i++)
+        {
+            new_list[i] = EMPTY_SPOT_INDICATOR;
+        }
+        
+        free(arraylist -> list);
+
+        arraylist -> list = new_list;
+        arraylist -> capacity = new_capacity;
+    }
+
+    else 
+    { 
+        int* new_list = (int*) malloc(capacity * sizeof(int));
+
+        if (new_list == NULL)
+        {
+            printf("Memory allocation failed for new list.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        for (int i = 0; i < position; i++)
+        {
+            new_list[i] = arraylist -> list[i];
+        }
+
+        new_list[position] = value;
+
+        for (int i = position; i < capacity; i++)
+        {
+            new_list[i + 1] = arraylist -> list[i];
+        }
+        
+        free(arraylist -> list);
+        arraylist -> list = new_list;
+    }
+
+    arraylist -> size++;
+}
+
 void arraylist_insert_beginning(arraylist_t* arraylist, int value)
 {
     validate_arraylist(arraylist);
@@ -157,6 +233,78 @@ void arraylist_insert_end(arraylist_t* arraylist, int value)
 
     arraylist -> list[size] = value;
     arraylist -> size++;
+}
+
+void arraylist_remove(arraylist_t* arraylist, int position)
+{
+    validate_arraylist(arraylist);
+
+    int size = arraylist -> size;
+    int capacity = arraylist -> capacity;
+
+    if (size == 0) 
+    {
+        printf("List is already empty.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (position < 0 || position > size - 1)
+    {
+        printf("Position is out of bounds.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (size == capacity / 2 + 1) 
+    {
+        int  new_capacity = capacity / 2;
+        int* new_list = (int*) malloc(new_capacity * sizeof(int));
+
+        for (int i = 0; i < position; i++)
+        {
+            new_list[i] = arraylist -> list[i];
+        }
+
+        for (int i = position + 1; i < size; i++)
+        {
+            new_list[i - 1] = arraylist -> list[i];
+        }
+
+        for (int i = size; i < new_capacity; i++)
+        {
+            new_list[i] = EMPTY_SPOT_INDICATOR;
+        }
+        
+        free(arraylist -> list);
+
+        arraylist -> list = new_list;
+        arraylist -> capacity = new_capacity;
+    }
+
+    else 
+    {
+        int* new_list = (int*) malloc(capacity * sizeof(int));
+
+        // ex arraylist [1,2,3,4] remove pos 2 with val 3
+        for (int i = 0; i < position; i++)
+        {
+            new_list[i] = arraylist -> list[i];
+        }
+
+        for (int i = position + 1; i < size; i++)
+        {
+            new_list[i - 1] = arraylist -> list[i];
+        }
+
+        for (int i = size; i < capacity; i++)
+        {
+            new_list[i] = EMPTY_SPOT_INDICATOR;
+        }
+        
+        free(arraylist -> list);
+        arraylist -> list = new_list;
+    }
+
+    arraylist -> size--;
 }
 
 void arraylist_remove_beginning(arraylist_t* arraylist)
