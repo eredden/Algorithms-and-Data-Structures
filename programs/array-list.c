@@ -39,42 +39,42 @@ arraylist_t* arraylist_factory(int capacity)
     return arraylist;
 }
 
-void arraylist_destructor(arraylist_t* arraylist)
+// ensures arraylist doesn't use null pointers
+// otherwise freeing it will screw things up
+void validate_arraylist(arraylist_t* arraylist)
 {
-    if (arraylist == NULL) 
-    { 
-        printf("Null pointer (arraylist) passed to arraylist_destructor().\n");
+    if (arraylist == NULL)
+    {
+        printf("Invalid arraylist, null pointer.\n");
         exit(EXIT_FAILURE);
     }
 
-    if (arraylist -> list == NULL) 
-    { 
-        printf("Null pointer (list) passed to arraylist_destructor().\n");
+    if (arraylist -> list == NULL)
+    {
+        printf("Invalid list inside arraylist, null pointer.\n");
         exit(EXIT_FAILURE);
     }
+}
+
+void arraylist_destructor(arraylist_t* arraylist)
+{
+    validate_arraylist(arraylist);
 
     free(arraylist -> list);
     free(arraylist);
 }
 
+// check first item in arraylist
 int arraylist_peek(arraylist_t* arraylist)
 {
-    if (arraylist == NULL || arraylist -> list == NULL) 
-    { 
-        printf("Null pointer passed to arraylist_peek().\n");
-        exit(EXIT_FAILURE);
-    }
+    validate_arraylist(arraylist);
 
     return arraylist -> list[0];
 }
 
 void arraylist_insert_end(arraylist_t* arraylist, int value)
 {
-    if (arraylist == NULL) 
-    { 
-        printf("Null pointer passed to arraylist_insert_end().\n");
-        exit(EXIT_FAILURE);
-    }
+    validate_arraylist(arraylist);
 
     int size = arraylist -> size;
     int capacity = arraylist -> capacity;
@@ -83,6 +83,12 @@ void arraylist_insert_end(arraylist_t* arraylist, int value)
     {
         int  new_capacity = capacity * 2;
         int* new_list = (int*) malloc(new_capacity * sizeof(int));
+
+        if (new_list == NULL)
+        {
+            printf("Memory allocation failed for new list.\n");
+            exit(EXIT_FAILURE);
+        }
 
         for (int i = 0; i < size; i++)
         {
@@ -106,11 +112,7 @@ void arraylist_insert_end(arraylist_t* arraylist, int value)
 
 void arraylist_remove_end(arraylist_t* arraylist)
 {
-    if (arraylist == NULL) 
-    { 
-        printf("Null pointer passed to arraylist_remove_end().\n");
-        exit(EXIT_FAILURE);
-    }
+    validate_arraylist(arraylist);
 
     int size = arraylist -> size;
     int capacity = arraylist -> capacity;
@@ -144,6 +146,7 @@ int main(void)
 {
     arraylist_t* list = arraylist_factory(2);
 
+    // convoluted way of testing addition/removal of values
     for (int i = 1; i < 5; i++)
     {
         arraylist_insert_end(list, i);
