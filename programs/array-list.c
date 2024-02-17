@@ -284,7 +284,6 @@ void arraylist_remove(arraylist_t* arraylist, int position)
     {
         int* new_list = (int*) malloc(capacity * sizeof(int));
 
-        // ex arraylist [1,2,3,4] remove pos 2 with val 3
         for (int i = 0; i < position; i++)
         {
             new_list[i] = arraylist -> list[i];
