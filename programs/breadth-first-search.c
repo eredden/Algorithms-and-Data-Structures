@@ -1,44 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "breadth-first-search.h"
-
-int peek(queue_t *queue) { return queue -> head -> value; }
-
-void enqueue(queue_t *queue, node_t *node)
-{
-    queue -> length++;
-
-    if (queue -> tail == NULL) 
-    { 
-        queue -> head = node;
-        queue -> tail = node; 
-        return;
-    }
-
-    queue -> tail -> next = node;
-    queue -> tail = node;
-}
-
-node_t* deque(queue_t *queue)
-{
-    if (queue -> length <= 0) { exit(-1); }
-
-    if (queue -> length == 1) 
-    { 
-        queue -> tail = NULL; 
-    }
-
-    queue -> length--;
-
-    node_t *old_head = queue -> head;
-
-    queue -> head = old_head -> next;
-    old_head -> next = NULL;
-
-    return old_head;
-}
-
-// start of actual breadth first search implementation
+#include "queue.h"
 
 int breadth_first_search(node_t* head, int needle)
 {
@@ -106,7 +68,7 @@ int main(void)
     int result = breadth_first_search(&head, needle);
     
     if (result) { printf("%d was found!\n", needle); }
-    else { printf("%d was not in the tree.\n", needle); }
+    else { printf("%d not found.\n", needle); }
 
     return 0;
 }

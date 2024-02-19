@@ -19,7 +19,7 @@ void enqueue(queue_t *queue, node_t *node)
     queue -> tail = node;
 }
 
-int deque(queue_t *queue)
+node_t* deque(queue_t *queue)
 {
     if (queue -> length <= 0) { exit(EXIT_FAILURE); }
 
@@ -35,5 +35,5 @@ int deque(queue_t *queue)
     queue -> head = old_head -> next;
     old_head -> next = NULL;
 
-    return old_head -> value;
+    return old_head;
 }
