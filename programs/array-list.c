@@ -63,7 +63,7 @@ void arraylist_insert(arraylist_t* arraylist, int value, int position)
     int size = arraylist -> size;
     int capacity = arraylist -> capacity;
 
-    if (position < 0 || position > size - 1)
+    if (position < 0 || position > capacity - 1)
     {
         printf("Position is out of bounds.\n");
         exit(EXIT_FAILURE);

@@ -1,13 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-/* due to c not having arraylists
-and myself not implementing them
-i decided to hardcode these values
-as preprocessor definitions */
-
-#define MAX_PATH_LENGTH 50
-#define EMPTY_SPOT_INDICATOR -1234
+#include "array-list.h"
 
 typedef struct node
 {
@@ -16,24 +9,16 @@ typedef struct node
     struct node* right;
 } node_t;
 
-void walk(node_t* node, int path[])
+void walk(node_t* node, arraylist_t* path)
 {
     if (node == NULL) { return; }
 
-    // get next empty spot in array
-    int index = 0;
-    for(index; index < MAX_PATH_LENGTH; index++)
-    {
-        if (path[index] == EMPTY_SPOT_INDICATOR) { break; }
-        if (index == MAX_PATH_LENGTH - 1) { exit(EXIT_FAILURE); }
-    }
-
-    /* the position of the path[index] 
-    assignment determines the order 
+    /* the position of the insert end 
+    function determines the order 
     which the tree is recursed, e.g. 
     this is pre-order. */
 
-    path[index] = node -> value;
+    arraylist_insert_end(path, node -> value);
     walk(node -> left, path);
     walk(node -> right, path);
 }
@@ -101,21 +86,16 @@ int main(void)
     node21.value = 12;
     node22.value = 17;
 
-    int path[MAX_PATH_LENGTH];
-
-    for (int i = 0; i < MAX_PATH_LENGTH; i++)
-    {
-        path[i] = EMPTY_SPOT_INDICATOR;
-    }
+    arraylist_t *path = arraylist_factory(2);
 
     // using walk()
     walk(&head, path);
     printf("Tree path: ");
 
-    for (int i = 0; i < MAX_PATH_LENGTH; i++)
+    for (int i = 0; i < path -> size; i++)
     {
-        if (path[i] == EMPTY_SPOT_INDICATOR) { break; }
-        printf("%d ", path[i]);
+        if (path -> list[i] == EMPTY_SPOT_INDICATOR) { break; }
+        printf("%d ", path -> list[i]);
     }
 
     printf("\n");
