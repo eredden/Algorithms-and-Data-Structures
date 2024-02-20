@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "array-list.h"
+#include "../arrays/array-list.h"
 
 int getLeft(int index)   { return 2 * index + 1; }
 int getRight(int index)  { return 2 * index + 2; }

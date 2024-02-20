@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "array-list.h"
+#include "../arrays/array-list.h"
 
 typedef struct node
 {

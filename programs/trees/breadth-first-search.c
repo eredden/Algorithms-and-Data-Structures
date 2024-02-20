@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "queue.h"
+#include "../sort/queue.h"
 
 int breadth_first_search(node_t* head, int needle)
 {
