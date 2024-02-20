@@ -20,7 +20,7 @@ typedef struct queue
 
 queue_t* queue_factory(void);
 
-void queue_destructor(queue_t* queue)
+void queue_destructor(queue_t* queue);
 
 int peek(queue_t *queue);
 
