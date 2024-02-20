@@ -18,6 +18,10 @@ typedef struct queue
     int length;
 } queue_t;
 
+queue_t* queue_factory(void);
+
+void queue_destructor(queue_t* queue)
+
 int peek(queue_t *queue);
 
 void enqueue(queue_t *queue, node_t *node);

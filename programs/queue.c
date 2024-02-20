@@ -2,6 +2,32 @@
 #include <stdlib.h>
 #include "queue.h"
 
+queue_t* queue_factory(void)
+{
+    queue_t* queue = (queue_t*) malloc(sizeof(queue_t));
+
+    if (queue == NULL) {
+        printf("Memory allocation for queue failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    queue -> head = NULL;
+    queue -> tail = NULL;
+    queue -> length = 0;
+
+    return queue;
+}
+
+void queue_destructor(queue_t* queue)
+{
+    if (queue == NULL) {
+        printf("Queue is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    free(queue);
+}
+
 int peek(queue_t *queue) { 
     if (queue == NULL) {
         printf("Queue is a null pointer.\n");
