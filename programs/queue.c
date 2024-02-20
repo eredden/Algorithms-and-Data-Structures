@@ -2,10 +2,33 @@
 #include <stdlib.h>
 #include "queue.h"
 
-int peek(queue_t *queue) { return queue -> head -> value; }
+int peek(queue_t *queue) { 
+    if (queue == NULL) {
+        printf("Queue is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (queue -> length <= 0) {
+        printf("Queue is empty.\n");
+        exit(EXIT_FAILURE); 
+    }
+
+    return queue -> head -> value; 
+}
 
 void enqueue(queue_t *queue, node_t *node)
 {
+    if (queue == NULL) {
+        printf("Queue is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (node == NULL)
+    {
+        printf("Node is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
     queue -> length++;
 
     if (queue -> tail == NULL) 
@@ -21,7 +44,15 @@ void enqueue(queue_t *queue, node_t *node)
 
 node_t* deque(queue_t *queue)
 {
-    if (queue -> length <= 0) { exit(EXIT_FAILURE); }
+    if (queue == NULL) {
+        printf("Queue is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (queue -> length <= 0) {
+        printf("Queue is empty.\n");
+        exit(EXIT_FAILURE); 
+    }
 
     if (queue -> length == 1) 
     { 
