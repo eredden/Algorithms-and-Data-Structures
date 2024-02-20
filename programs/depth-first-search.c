@@ -26,7 +26,11 @@ void walk(node_t* node, arraylist_t* path)
 // int returned here is meant to be bool
 int find(node_t* head, int needle)
 {
-    if (head == NULL) { return 0; }
+    if (head == NULL)
+    {
+        printf("Head is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
 
     if (head -> value == needle) { return 1; }
     else if (head -> value > needle) { find(head -> left, needle); }
