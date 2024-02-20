@@ -392,9 +392,3 @@ void arraylist_remove_end(arraylist_t* arraylist)
 
     arraylist -> size--;
 }
-
-void arraylist_free(arraylist_t* arraylist)
-{
-    free(arraylist -> list);
-    free(arraylist);
-}
