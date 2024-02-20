@@ -8,6 +8,12 @@ int getParent(int index) { return (index - 1) / 2; }
 
 void heapifyUp(arraylist_t* heap, int index)
 {   
+    if (heap == NULL)
+    {
+        printf("Heap is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
     int value = heap -> list[index];
 
     int parent_index = getParent(index);
@@ -26,6 +32,12 @@ void heapifyUp(arraylist_t* heap, int index)
 
 void heapifyDown(arraylist_t* heap, int index)
 {
+    if (heap == NULL)
+    {
+        printf("Heap is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
     if (index >= heap -> size ) { return; }
 
     int value = heap -> list[index];
@@ -57,12 +69,24 @@ void heapifyDown(arraylist_t* heap, int index)
 
 void heap_insert(arraylist_t* heap, int value)
 {
+    if (heap == NULL)
+    {
+        printf("Heap is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
     arraylist_insert_end(heap, value);
     heapifyUp(heap, heap -> size - 1);
 }
 
 int heap_remove(arraylist_t* heap)
 {
+    if (heap == NULL)
+    {
+        printf("Heap is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
     if (heap -> size == 0)
     {
         printf("No items in the heap.\n");
@@ -90,7 +114,7 @@ int main(void)
     arraylist_t* heap = arraylist_factory(2);
 
     // fill heap with 1 to 7
-    for (int i = 1; i < 7; i++) 
+    for (int i = 1; i <= 7; i++) 
     { 
         arraylist_insert_end(heap, i); 
     }
