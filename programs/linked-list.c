@@ -1,8 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "linked-list.h"
 
 int get_length(linked_list_t *linked_list)
 {
+    if (linked_list == NULL)
+    {
+        printf("Linked list is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
     node_t *current_node = linked_list -> head;
     int length;
 
@@ -16,6 +23,18 @@ int get_length(linked_list_t *linked_list)
 
 node_t* get_node(linked_list_t *linked_list, int index)
 {
+    if (linked_list == NULL)
+    {
+        printf("Linked list is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (index < 0 || index > get_length(linked_list) - 1)
+    {
+        printf("Index is out of bounds.\n");
+        exit(EXIT_FAILURE);
+    }
+
     node_t *current_node = linked_list -> head;
 
     for (int i = 0; i < index; i++)
@@ -33,6 +52,24 @@ node_t* get_node(linked_list_t *linked_list, int index)
 
 void insert_at(linked_list_t *linked_list, node_t *node, int index)
 {
+    if (linked_list == NULL)
+    {
+        printf("Linked list is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (node == NULL)
+    {
+        printf("Node is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (index < 0 || index > get_length(linked_list) - 1)
+    {
+        printf("Index is out of bounds.\n");
+        exit(EXIT_FAILURE);
+    }
+
     node_t *next_node = get_node(linked_list, index);
     node_t *prev_node = next_node -> prev;
 
@@ -48,6 +85,18 @@ void insert_at(linked_list_t *linked_list, node_t *node, int index)
 
 void insert_front(linked_list_t *linked_list, node_t *node)
 {
+    if (linked_list == NULL)
+    {
+        printf("Linked list is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (node == NULL)
+    {
+        printf("Node is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
     node_t *head = linked_list -> head;
 
     node -> next = head;
@@ -58,6 +107,18 @@ void insert_front(linked_list_t *linked_list, node_t *node)
 
 void insert_back(linked_list_t *linked_list, node_t *node)
 {
+    if (linked_list == NULL)
+    {
+        printf("Linked list is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (node == NULL)
+    {
+        printf("Node is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
     node_t *tail = linked_list -> tail;
 
     tail -> next = node;
@@ -68,6 +129,24 @@ void insert_back(linked_list_t *linked_list, node_t *node)
 
 int remove_at(linked_list_t *linked_list, int index)
 {
+    if (linked_list == NULL)
+    {
+        printf("Linked list is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (get_length(linked_list) == 0)
+    {
+        printf("Linked list is empty.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (index < 0 || index > get_length(linked_list) - 1)
+    {
+        printf("Index is out of bounds.\n");
+        exit(EXIT_FAILURE);
+    }
+
     node_t *node = get_node(linked_list, index);
 
     node_t *prev_node = node -> prev;
@@ -87,6 +166,18 @@ int remove_at(linked_list_t *linked_list, int index)
 
 int remove_front(linked_list_t *linked_list)
 {
+    if (linked_list == NULL)
+    {
+        printf("Linked list is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (get_length(linked_list) == 0)
+    {
+        printf("Linked list is empty.\n");
+        exit(EXIT_FAILURE);
+    }
+
     node_t *removed_head = linked_list -> head;
     node_t *new_head = linked_list -> head -> next;
 
@@ -100,6 +191,18 @@ int remove_front(linked_list_t *linked_list)
 
 int remove_back(linked_list_t *linked_list)
 {
+    if (linked_list == NULL)
+    {
+        printf("Linked list is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (get_length(linked_list) == 0)
+    {
+        printf("Linked list is empty.\n");
+        exit(EXIT_FAILURE);
+    }
+
     node_t *removed_tail = linked_list -> tail;
     node_t *new_tail = linked_list -> tail -> prev;
 
