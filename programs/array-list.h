@@ -23,6 +23,4 @@ void arraylist_remove(arraylist_t* arraylist, int position);
 void arraylist_remove_beginning(arraylist_t* arraylist);
 void arraylist_remove_end(arraylist_t* arraylist);
 
-void arraylist_free(arraylist_t* arraylist);
-
 # endif // ARRAY_LIST
