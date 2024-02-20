@@ -37,13 +37,13 @@ void validate_arraylist(arraylist_t* arraylist)
 {
     if (arraylist == NULL)
     {
-        printf("Invalid arraylist, null pointer.\n");
+        printf("Arraylist is a null pointer.\n");
         exit(EXIT_FAILURE);
     }
 
     if (arraylist -> list == NULL)
     {
-        printf("Invalid list inside arraylist, null pointer.\n");
+        printf("List inside arraylist is a null pointer.\n");
         exit(EXIT_FAILURE);
     }
 }
