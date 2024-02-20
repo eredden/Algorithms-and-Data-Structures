@@ -2,10 +2,37 @@
 #include <stdlib.h>
 #include "stack.h"
 
-int peek(stack_t *stack) { return stack -> head -> value; }
+int peek(stack_t *stack) 
+{ 
+    if (stack == NULL)
+    {
+        printf("Stack is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (stack -> length <= 0) 
+    { 
+        printf("Stack is empty.\n");
+        exit(EXIT_FAILURE); 
+    }
+
+    return stack -> head -> value; 
+}
 
 void push(stack_t *stack, node_t *node)
 {
+    if (stack == NULL)
+    {
+        printf("Stack is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (node == NULL)
+    {
+        printf("Node is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
     stack -> length++;
 
     if (stack -> head == NULL) 
@@ -20,7 +47,17 @@ void push(stack_t *stack, node_t *node)
 
 int pop(stack_t *stack)
 {
-    if (stack -> length <= 0) { exit(EXIT_FAILURE); }
+    if (stack == NULL)
+    {
+        printf("Stack is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (stack -> length <= 0) 
+    { 
+        printf("Stack is empty.\n");
+        exit(EXIT_FAILURE); 
+    }
 
     stack -> length--;
 
