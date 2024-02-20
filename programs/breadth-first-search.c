@@ -4,6 +4,12 @@
 
 int breadth_first_search(node_t* head, int needle)
 {
+    if (head == NULL)
+    {
+        printf("Head is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
     queue_t queue;
     queue.head = NULL;
     queue.tail = NULL;
