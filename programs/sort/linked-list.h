@@ -13,6 +13,9 @@ typedef struct linked_list
     node_t *tail;
 } linked_list_t;
 
+linked_list_t* linked_list_factory(void);
+void linked_list_destructor(linked_list_t* linked_list);
+
 int get_length(linked_list_t *linked_list);
 
 node_t* get_node(linked_list_t *linked_list, int index);

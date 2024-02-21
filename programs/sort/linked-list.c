@@ -2,6 +2,33 @@
 #include <stdlib.h>
 #include "linked-list.h"
 
+linked_list_t* linked_list_factory(void)
+{
+    linked_list_t* linked_list = (linked_list_t*) malloc(sizeof(linked_list_t));
+
+    if (linked_list == NULL)
+    {
+        printf("Memory allocation for linked list failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    linked_list -> head = NULL;
+    linked_list -> tail = NULL;
+
+    return linked_list;
+}
+
+void linked_list_destructor(linked_list_t* linked_list)
+{
+    if (linked_list == NULL)
+    {
+        printf("Linked list is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    free(linked_list);
+}
+
 int get_length(linked_list_t *linked_list)
 {
     if (linked_list == NULL)
@@ -9,6 +36,8 @@ int get_length(linked_list_t *linked_list)
         printf("Linked list is a null pointer.\n");
         exit(EXIT_FAILURE);
     }
+
+    if (linked_list -> head == NULL) { return 0; }
 
     node_t *current_node = linked_list -> head;
     int length;
@@ -97,6 +126,14 @@ void insert_front(linked_list_t *linked_list, node_t *node)
         exit(EXIT_FAILURE);
     }
 
+    if (linked_list -> head == NULL)
+    {
+        linked_list -> head = node;
+        linked_list -> tail = node;
+
+        return;
+    }
+
     node_t *head = linked_list -> head;
 
     node -> next = head;
@@ -117,6 +154,14 @@ void insert_back(linked_list_t *linked_list, node_t *node)
     {
         printf("Node is a null pointer.\n");
         exit(EXIT_FAILURE);
+    }
+
+    if (linked_list -> tail == NULL)
+    {
+        linked_list -> head = node;
+        linked_list -> tail = node;
+
+        return;
     }
 
     node_t *tail = linked_list -> tail;
@@ -181,6 +226,14 @@ int remove_front(linked_list_t *linked_list)
     node_t *removed_head = linked_list -> head;
     node_t *new_head = linked_list -> head -> next;
 
+    if (linked_list -> head == linked_list -> tail)
+    {
+        linked_list -> head = NULL;
+        linked_list -> tail = NULL;
+
+        return removed_head -> value;
+    }
+
     linked_list -> head = linked_list -> head -> next;
 
     removed_head -> next = NULL;
@@ -205,6 +258,14 @@ int remove_back(linked_list_t *linked_list)
 
     node_t *removed_tail = linked_list -> tail;
     node_t *new_tail = linked_list -> tail -> prev;
+
+    if (linked_list -> head == linked_list -> tail)
+    {
+        linked_list -> head = NULL;
+        linked_list -> tail = NULL;
+
+        return removed_tail -> value;
+    }
 
     linked_list -> tail = linked_list -> tail -> prev;
 
