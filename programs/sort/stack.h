@@ -13,6 +13,9 @@ typedef struct stack
     int length;
 } stack_t;
 
+stack_t* stack_factory();
+void stack_destructor(stack_t* stack);
+
 int peek(stack_t *stack);
 
 void push(stack_t *stack, node_t *node);

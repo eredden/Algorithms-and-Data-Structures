@@ -2,6 +2,31 @@
 #include <stdlib.h>
 #include "stack.h"
 
+stack_t* stack_factory()
+{
+    stack_t* stack = (stack_t*) malloc(sizeof(stack_t));
+
+    if (stack == NULL)
+    {
+        printf("Memory allocation for stack failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    stack -> head = NULL;
+    stack -> length = 0;
+}
+
+void stack_destructor(stack_t* stack)
+{
+    if (stack == NULL)
+    {
+        printf("Stack is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    free(stack);
+}
+
 int peek(stack_t *stack) 
 { 
     if (stack == NULL)
