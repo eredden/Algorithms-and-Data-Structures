@@ -13,7 +13,7 @@ typedef struct stack
     int length;
 } stack_t;
 
-stack_t* stack_factory();
+stack_t* stack_factory(void);
 void stack_destructor(stack_t* stack);
 
 int peek(stack_t *stack);

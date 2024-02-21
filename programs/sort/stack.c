@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "stack.h"
 
-stack_t* stack_factory()
+stack_t* stack_factory(void)
 {
     stack_t* stack = (stack_t*) malloc(sizeof(stack_t));
 
