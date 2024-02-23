@@ -14,6 +14,7 @@ linked_list_t* linked_list_factory(void)
 
     linked_list -> head = NULL;
     linked_list -> tail = NULL;
+    linked_list -> length = 0;
 
     return linked_list;
 }
@@ -37,17 +38,7 @@ int get_length(linked_list_t *linked_list)
         exit(EXIT_FAILURE);
     }
 
-    if (linked_list -> head == NULL) { return 0; }
-
-    node_t *current_node = linked_list -> head;
-    int length;
-
-    for (length = 0; current_node -> next != NULL; length++)
-    {
-        current_node = current_node -> next;
-    }
-
-    return length + 1;
+    return linked_list -> length;
 }
 
 node_t* get_node(linked_list_t *linked_list, int index)
@@ -99,6 +90,8 @@ void insert_at(linked_list_t *linked_list, node_t *node, int index)
         exit(EXIT_FAILURE);
     }
 
+    linked_list -> length++;
+
     node_t *next_node = get_node(linked_list, index);
     node_t *prev_node = next_node -> prev;
 
@@ -125,6 +118,8 @@ void insert_front(linked_list_t *linked_list, node_t *node)
         printf("Node is a null pointer.\n");
         exit(EXIT_FAILURE);
     }
+
+    linked_list -> length++;
 
     if (linked_list -> head == NULL)
     {
@@ -155,6 +150,8 @@ void insert_back(linked_list_t *linked_list, node_t *node)
         printf("Node is a null pointer.\n");
         exit(EXIT_FAILURE);
     }
+
+    linked_list -> length++;
 
     if (linked_list -> tail == NULL)
     {
@@ -192,6 +189,8 @@ int remove_at(linked_list_t *linked_list, int index)
         exit(EXIT_FAILURE);
     }
 
+    linked_list -> length--;
+
     node_t *node = get_node(linked_list, index);
 
     node_t *prev_node = node -> prev;
@@ -222,6 +221,8 @@ int remove_front(linked_list_t *linked_list)
         printf("Linked list is empty.\n");
         exit(EXIT_FAILURE);
     }
+
+    linked_list -> length--;
 
     node_t *removed_head = linked_list -> head;
     node_t *new_head = linked_list -> head -> next;
@@ -255,6 +256,8 @@ int remove_back(linked_list_t *linked_list)
         printf("Linked list is empty.\n");
         exit(EXIT_FAILURE);
     }
+
+    linked_list -> length--;
 
     node_t *removed_tail = linked_list -> tail;
     node_t *new_tail = linked_list -> tail -> prev;

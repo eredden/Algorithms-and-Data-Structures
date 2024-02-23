@@ -11,6 +11,7 @@ typedef struct linked_list
 {
     node_t *head;
     node_t *tail;
+    int length;
 } linked_list_t;
 
 linked_list_t* linked_list_factory(void);
