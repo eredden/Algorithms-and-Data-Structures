@@ -169,7 +169,7 @@ void insert_back(linked_list_t *linked_list, node_t *node)
     linked_list -> tail = node;
 }
 
-int remove_at(linked_list_t *linked_list, int index)
+node_t* remove_at(linked_list_t *linked_list, int index)
 {
     if (linked_list == NULL)
     {
@@ -205,10 +205,10 @@ int remove_at(linked_list_t *linked_list, int index)
     node -> next = NULL;
     node -> prev = NULL;
 
-    return node -> value;
+    return node;
 }
 
-int remove_front(linked_list_t *linked_list)
+node_t* remove_front(linked_list_t *linked_list)
 {
     if (linked_list == NULL)
     {
@@ -232,7 +232,7 @@ int remove_front(linked_list_t *linked_list)
         linked_list -> head = NULL;
         linked_list -> tail = NULL;
 
-        return removed_head -> value;
+        return removed_head;
     }
 
     linked_list -> head = linked_list -> head -> next;
@@ -240,10 +240,10 @@ int remove_front(linked_list_t *linked_list)
     removed_head -> next = NULL;
     new_head -> prev = NULL;
 
-    return removed_head -> value;
+    return removed_head;
 }
 
-int remove_back(linked_list_t *linked_list)
+node_t* remove_back(linked_list_t *linked_list)
 {
     if (linked_list == NULL)
     {
@@ -267,7 +267,7 @@ int remove_back(linked_list_t *linked_list)
         linked_list -> head = NULL;
         linked_list -> tail = NULL;
 
-        return removed_tail -> value;
+        return removed_tail;
     }
 
     linked_list -> tail = linked_list -> tail -> prev;
@@ -275,5 +275,5 @@ int remove_back(linked_list_t *linked_list)
     removed_tail -> prev = NULL;
     new_tail -> next = NULL;
 
-    return removed_tail -> value;
+    return removed_tail;
 }
