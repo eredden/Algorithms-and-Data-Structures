@@ -26,10 +26,10 @@ typedef struct lru
 {
     int length;
     node_t* head, tail;
-
-    // add lookup attribute here
-    // should be map type with key/value pair
-    // value needs to be node
+    map_t* lookup;
 } lru_t;
+
+void update(int key, int value);
+void get(int key);
 
 # endif // LRU
