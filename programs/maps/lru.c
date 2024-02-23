@@ -2,16 +2,6 @@
 #include <stdlib.h>
 #include "lru.h"
 
-typedef struct lru
-{
-    int length;
-    node_t* head, tail;
-
-    // add lookup attribute here
-    // should be map type with key/value pair
-    // value needs to be node
-} lru_t;
-
 void update(int key, int value)
 {
     // does key exist
