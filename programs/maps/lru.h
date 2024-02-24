@@ -21,15 +21,24 @@ typedef struct map
 map_t* map_factory(int key, node_t* value);
 void map_destructor(map_t* map);
 
+int hash(int key, int size);
+map_t* search(map_t** hash_map, int size, int key);
+
 // lru cache defintions start here
 typedef struct lru
 {
     int length;
-    node_t* head, tail;
+    int capacity;
+    node_t* head;
+    node_t* tail;
     map_t* lookup;
+    map_t* reverse_lookup;
 } lru_t;
 
-void update(int key, int value);
-void get(int key);
+lru_t* lru_factory(int capacity);
+void lru_destructor(lru_t* lru);
+
+void update(lru_t* lru, int key, int value);
+void get(lru_t* lru, int key);
 
 # endif // LRU
