@@ -30,4 +30,7 @@ void map_destructor(map_t* map)
 }
 
 // to-do: actually implement hash
-int hash(int key) { return key; }
+int hash(int key, int size) 
+{ 
+    return key % size;
+}
