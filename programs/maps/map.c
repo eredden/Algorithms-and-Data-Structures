@@ -29,8 +29,23 @@ void map_destructor(map_t* map)
     free(map);
 }
 
-// to-do: actually implement hash
-int hash(int key, int size) 
-{ 
-    return key % size;
+int hash(int key, int size) { return key % size; }
+
+map_t* search(map_t** hash_map, int size, int key)
+{
+    if (hash_map == NULL)
+    {
+        printf("Hash map is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int index = hash(key, size);
+    map_t* map = hash_map[index];
+
+    while (map -> key != 0)
+    {
+        if (map -> key == key) { return map; }
+        if (map -> key != key && index < size) { index++; }
+        else { break; }
+    }
 }
