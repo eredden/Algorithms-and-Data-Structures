@@ -2,12 +2,6 @@
 #include <stdlib.h>
 #include "lru.h"
 
-typedef struct map
-{
-    int key;
-    node_t* value;
-} map_t;
-
 map_t* map_factory(int key, node_t* value)
 {
     map_t* map = (map_t*) malloc(sizeof(map_t));

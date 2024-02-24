@@ -2,12 +2,6 @@
 #include <stdlib.h>
 #include "lru.h"
 
-typedef struct node
-{
-    int value;
-    struct node *next, *prev;
-} node_t;
-
 node_t* node_factory(int value)
 {
     node_t* node = (node_t*) malloc(sizeof(node_t));
