@@ -5,12 +5,24 @@
 lru_t* lru_factory(int capacity)
 {
     lru_t* lru = (lru_t*) malloc(sizeof(lru_t));
-    map_t* lookup = (map_t*) malloc(capacity * sizeof(map_t));
-    map_t* reverse_lookup = (map_t*) malloc(capacity * sizeof(map_t));
+    hashmap_t* lookup = hashmap_factory();
+    hashmap_t* reverse_lookup = hashmap_factory();
 
     if (lru == NULL)
     {
         printf("Memory allocation for LRU failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (lookup == NULL)
+    {
+        printf("Memory allocation for lookup hashmap failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (reverse_lookup == NULL)
+    {
+        printf("Memory allocation for reverse lookup hashmap failed.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -40,7 +52,14 @@ void lru_destructor(lru_t* lru)
         exit(EXIT_FAILURE);
     }
 
-    free(lru -> lookup);
+    if (lru -> reverse_lookup == NULL)
+    {
+        printf("LRU reverse lookup is a null pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    hashmap_destructor(lru -> lookup);
+    hashmap_destructor(lru -> reverse_lookup);
     free(lru);
 }
 
