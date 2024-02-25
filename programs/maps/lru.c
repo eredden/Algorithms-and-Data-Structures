@@ -63,52 +63,101 @@ void lru_destructor(lru_t* lru)
     free(lru);
 }
 
-void update(lru_t* lru, int key, int value)
+void lru_update(lru_t* lru, int key, int value)
 {
-    // does key exist
+    node_t* node = hashmap_get(lru -> lookup, key);
 
-    // if not, need to insert
-        // if this exceeds capacity, evict
+    if (node == NULL) 
+    { 
+        node_t* node = node_factory(value);
+        lru -> length++;
 
-    // if it does, we need to update to front of list
-    // and update value    
-}
+        lru_prepend(lru, node);
+        lru_trim_cache(lru);
 
-void get(lru_t* lru, int key)
-{
-    // verify that key exists in cache
-    // get value by key
-
-    // update value we found and move it front
-    
-    // return value found or NULL
-}
-
-int main(void)
-{
-    hashmap_t* hashmap = hashmap_factory();
-
-    hashmap_insert(hashmap, 1, NULL);
-    hashmap_insert(hashmap, 2, NULL);
-    hashmap_insert(hashmap, 11, NULL);
-
-    for (int i = 0; i < HASHMAP_MAX_SIZE; i++)
-    {
-        map_t* map = hashmap -> table[i];
-        if (map == NULL) { continue; }
-
-        int key = map -> key;
-        node_t* value = map -> value;
-
-        printf("Key %d for node %p in table position %d.\n", key, value, i);
+        hashmap_insert(lru -> lookup, key, node);
+        // NEEDS TO BE FIXED
+        // hashmap_insert(lru -> reverse_lookup, node -> value, key);
     }
 
-    map_t* temporary_map = hashmap_search(hashmap, 1);
-    node_t* temporary_node = hashmap_get(hashmap, 1);
+    else
+    {
+        lru_detach(lru, node);
+        lru_prepend(lru, node);
+        node -> value = value;
+    }
+}
 
-    printf("%p map contains %p node pointer.\n", temporary_map, temporary_node);
+void lru_detach(lru_t* lru, node_t* node) 
+{
+    if (node -> prev) { node -> prev -> next = node -> next; }
+    if (node -> next) { node -> next -> prev = node -> prev; }
 
-    hashmap_destructor(hashmap);
+    if (lru -> length == 1) { lru -> head = lru -> tail = NULL; }
+
+    if (lru -> head == node) { lru -> head = node -> next; }
+    if (lru -> tail == node) { lru -> tail = node -> prev; }
+
+    node -> prev = NULL;
+    node -> next = NULL;
+}
+
+void lru_prepend(lru_t* lru, node_t* node) 
+{
+    if (!(lru -> head)) 
+    { 
+        lru -> head = lru -> tail = node; 
+        return;
+    }
+
+    node -> next = lru -> head;
+    lru -> head -> prev = node;
+
+    lru -> head = node;
+}
+
+void lru_trim_cache(lru_t* lru)
+{
+    if (lru -> length <= lru -> capacity) { return; }
+
+    node_t* tail = lru -> tail;
+    lru_detach(lru, tail);
+
+    // NEEDS TO BE FIXED TO GET THE KEY FOR TAIL NODE!
+    // int key = hashmap_get(lru -> reverse_lookup, tail -> value);
+    int key = 0; // temp
+
+    hashmap_remove(lru -> lookup, key);
+    hashmap_remove(lru -> reverse_lookup, key);
+
+    lru -> length--;
+}
+
+int lru_get(lru_t* lru, int key)
+{
+    node_t* node = hashmap_get(lru -> lookup, key);
+
+    if (node == NULL) { return -1; }
+
+    lru_detach(lru, node);
+    lru_prepend(lru, node);
+
+    return node -> value;
+}
+
+// temporarily here for testing as this program broke
+int main(void)
+{
+    lru_t* lru = lru_factory(HASHMAP_MAX_SIZE);
+
+    lru_update(lru, 10, 10);
+    lru_update(lru, 11, 11);
+    lru_update(lru, 12, 12);
+
+    printf("%p head, %p tail, %d length, %d capacity.\n", 
+        lru -> head, lru -> tail, lru -> length, lru -> capacity);
+
+    lru_destructor(lru);
 
     return 0;
 }

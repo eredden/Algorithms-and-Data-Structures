@@ -53,7 +53,10 @@ typedef struct lru
 lru_t* lru_factory(int capacity);
 void lru_destructor(lru_t* lru);
 
-void update(lru_t* lru, int key, int value);
-void get(lru_t* lru, int key);
+void lru_update(lru_t* lru, int key, int value);
+void lru_detach(lru_t* lru, node_t* node);
+void lru_prepend(lru_t* lru, node_t* node);
+void lru_trim_cache(lru_t* lru);
+int lru_get(lru_t* lru, int key);
 
 # endif // LRU
