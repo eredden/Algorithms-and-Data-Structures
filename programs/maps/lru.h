@@ -44,8 +44,8 @@ typedef struct lru
     int capacity;
     node_t* head;
     node_t* tail;
-    map_t* lookup;
-    map_t* reverse_lookup;
+    hashmap_t* lookup;
+    hashmap_t* reverse_lookup;
 } lru_t;
 
 lru_t* lru_factory(int capacity);
