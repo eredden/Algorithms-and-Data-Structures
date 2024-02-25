@@ -67,21 +67,22 @@ void get(lru_t* lru, int key)
 
 int main(void)
 {
-    lru_t* lru = lru_factory(10);
+    hashmap_t* hashmap = hashmap_factory();
 
-    printf("LRU has been created!\n");
+    hashmap_insert(hashmap, 1, NULL);
 
-    // note how we manually state the position of the array
-    // map hash function needs to do this for us
-    // work on hashing function
-    lru -> lookup[hash(9, 10)] = *map_factory(100, node_factory(100));
-
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < HASHMAP_MAX_SIZE; i++)
     {
-        printf("On iteration %d:\n", i);
-        map_t map = lru -> lookup[i];
-        printf("%d key for %p value in position %d.\n", map.key, map.value, i);
+        map_t* map = hashmap -> table[i];
+        if (map == NULL) { continue; }
+
+        int key = map -> key;
+        node_t* value = map -> value;
+
+        printf("Key %d for node %p in table position %d.\n", key, value, i);
     }
+
+    hashmap_destructor(hashmap);
 
     return 0;
 }
