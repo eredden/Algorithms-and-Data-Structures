@@ -89,6 +89,8 @@ int main(void)
     hashmap_t* hashmap = hashmap_factory();
 
     hashmap_insert(hashmap, 1, NULL);
+    hashmap_insert(hashmap, 2, NULL);
+    hashmap_insert(hashmap, 11, NULL);
 
     for (int i = 0; i < HASHMAP_MAX_SIZE; i++)
     {
@@ -100,6 +102,11 @@ int main(void)
 
         printf("Key %d for node %p in table position %d.\n", key, value, i);
     }
+
+    map_t* temporary_map = hashmap_search(hashmap, 1);
+    node_t* temporary_node = hashmap_get(hashmap, 1);
+
+    printf("%p map contains %p node pointer.\n", temporary_map, temporary_node);
 
     hashmap_destructor(hashmap);
 

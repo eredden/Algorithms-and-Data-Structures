@@ -27,15 +27,17 @@ typedef struct hashmap
 } hashmap_t;
 
 hashmap_t* hashmap_factory(void);
+void hashmap_validate(hashmap_t* hashmap);
 void hashmap_destructor(hashmap_t* hashmap);
-
-map_t* map_factory(int key, node_t* value);
-void map_destructor(map_t* map);
 
 int hash(int key);
 void hashmap_insert(hashmap_t* hashmap, int key, node_t* value);
-map_t* hashmap_search(hashmap_t* hashmap, int key);
 void hashmap_remove(hashmap_t* hashmap, int key);
+map_t* hashmap_search(hashmap_t* hashmap, int key);
+node_t* hashmap_get(hashmap_t* hashmap, int key);
+
+map_t* map_factory(int key, node_t* value);
+void map_destructor(map_t* map);
 
 // lru cache defintions start here
 typedef struct lru

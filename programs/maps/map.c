@@ -28,7 +28,7 @@ hashmap_t* hashmap_factory(void)
     return hashmap;
 }
 
-void hashmap_destructor(hashmap_t* hashmap)
+void hashmap_validate(hashmap_t* hashmap)
 {
     if (hashmap == NULL)
     {
@@ -41,6 +41,11 @@ void hashmap_destructor(hashmap_t* hashmap)
         printf("Hashmap table is a null pointer.\n");
         exit(EXIT_FAILURE);
     }
+}
+
+void hashmap_destructor(hashmap_t* hashmap)
+{
+    hashmap_validate(hashmap);
 
     for (int i = 0; i < HASHMAP_MAX_SIZE; i++)
     {
@@ -85,17 +90,7 @@ int hash(int key) { return key % HASHMAP_MAX_SIZE; }
 
 void hashmap_insert(hashmap_t* hashmap, int key, node_t* value) 
 {
-    if (hashmap == NULL)
-    {
-        printf("Hashmap is a null pointer.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    if (hashmap -> table == NULL)
-    {
-        printf("Hashmap table is a null pointer.\n");
-        exit(EXIT_FAILURE);
-    }
+    hashmap_validate(hashmap);
 
     int index = hash(key);
     map_t* map = map_factory(key, value);
@@ -104,46 +99,9 @@ void hashmap_insert(hashmap_t* hashmap, int key, node_t* value)
     hashmap -> table[index] = map;
 }
 
-map_t* hashmap_search(hashmap_t* hashmap, int key)
-{
-    if (hashmap == NULL)
-    {
-        printf("Hashmap is a null pointer.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    if (hashmap -> table == NULL)
-    {
-        printf("Hashmap table is a null pointer.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    int index = hash(key);
-    map_t* map = hashmap -> table[index];
-
-    while (map != NULL)
-    {
-        if (map -> key == key) { return map; }
-        if (map -> key != key && map -> next != NULL) { map = map -> next; }
-        else { return NULL; }
-    }
-
-    return NULL;
-}
-
 void hashmap_remove(hashmap_t* hashmap, int key)
 {
-    if (hashmap == NULL)
-    {
-        printf("Hashmap is a null pointer.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    if (hashmap -> table == NULL)
-    {
-        printf("Hashmap table is a null pointer.\n");
-        exit(EXIT_FAILURE);
-    }
+    hashmap_validate(hashmap);
 
     int index = hash(key);
     map_t* map = hashmap -> table[index];
@@ -170,4 +128,31 @@ void hashmap_remove(hashmap_t* hashmap, int key)
     }
 
     return;
+}
+
+map_t* hashmap_search(hashmap_t* hashmap, int key)
+{
+    hashmap_validate(hashmap);
+
+    int index = hash(key);
+    map_t* map = hashmap -> table[index];
+
+    while (map != NULL)
+    {
+        if (map -> key == key) { return map; }
+        if (map -> key != key && map -> next != NULL) { map = map -> next; }
+        else { return NULL; }
+    }
+
+    return NULL;
+}
+
+node_t* hashmap_get(hashmap_t* hashmap, int key)
+{
+    hashmap_validate(hashmap);
+
+    map_t* map = hashmap_search(hashmap, key);
+    node_t* node = map -> value;
+
+    return node;
 }
