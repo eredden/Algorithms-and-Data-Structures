@@ -69,15 +69,14 @@ void lru_update(lru_t* lru, int key, int value)
 
     if (node == NULL) 
     { 
-        node_t* node = node_factory(value);
+        node_t* new_node = node_factory(value);
         lru -> length++;
 
-        lru_prepend(lru, node);
+        lru_prepend(lru, new_node);
         lru_trim_cache(lru);
 
-        hashmap_insert(lru -> lookup, key, node);
-        // NEEDS TO BE FIXED
-        // hashmap_insert(lru -> reverse_lookup, node -> value, key);
+        hashmap_insert(lru -> lookup, key, new_node);
+        hashmap_insert(lru -> reverse_lookup, value, node_factory(key));
     }
 
     else
@@ -118,14 +117,12 @@ void lru_prepend(lru_t* lru, node_t* node)
 
 void lru_trim_cache(lru_t* lru)
 {
-    if (lru -> length <= lru -> capacity) { return; }
+    if (lru -> capacity >= lru -> length) { return; }
 
     node_t* tail = lru -> tail;
     lru_detach(lru, tail);
 
-    // NEEDS TO BE FIXED TO GET THE KEY FOR TAIL NODE!
-    // int key = hashmap_get(lru -> reverse_lookup, tail -> value);
-    int key = 0; // temp
+    int key = tail -> value;
 
     hashmap_remove(lru -> lookup, key);
     hashmap_remove(lru -> reverse_lookup, key);
@@ -150,9 +147,9 @@ int main(void)
 {
     lru_t* lru = lru_factory(HASHMAP_MAX_SIZE);
 
-    lru_update(lru, 10, 10);
-    lru_update(lru, 11, 11);
-    lru_update(lru, 12, 12);
+    lru_update(lru, 9, 10);
+    lru_update(lru, 11, 12);
+    lru_update(lru, 13, 14);
 
     printf("%p head, %p tail, %d length, %d capacity.\n", 
         lru -> head, lru -> tail, lru -> length, lru -> capacity);
