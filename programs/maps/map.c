@@ -152,6 +152,9 @@ node_t* hashmap_get(hashmap_t* hashmap, int key)
     hashmap_validate(hashmap);
 
     map_t* map = hashmap_search(hashmap, key);
+
+    if (map == NULL) { return NULL; }
+
     node_t* node = map -> value;
 
     return node;
